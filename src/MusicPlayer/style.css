@@ -1,0 +1,114 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+body {
+  font-family: Manrope;
+}
+.music {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+}
+.sidebar {
+  background-color: white;
+  min-height: 100vh;
+}
+.dashboard {
+  background-color: rgb(48, 48, 48);
+  min-height: 100vh;
+  color: white;
+}
+.songs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.cover_pic {
+  width: 100%;
+}
+.song {
+  width: 23%;
+  min-width: 15rem;
+  padding: 0.5rem;
+  background-color: rgb(97, 97, 97);
+  color: white;
+  animation: from-down 1s 1;
+}
+@keyframes from-down {
+  from {
+    transform: translateY(2rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.song_title {
+  font-weight: bold;
+}
+/* OVERLAY */
+.overlay {
+  opacity: 0;
+  background-color: #00000050;
+  font-size: 3rem;
+}
+.overlay:hover {
+  opacity: 0.5;
+}
+
+/* PLAYER PART */
+.player {
+  height: 6rem;
+}
+.player_part {
+  height: 6rem;
+  background-color: rgb(22, 22, 22);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  color: white;
+}
+.song_details {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+.song_details img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  animation: roll 4s infinite;
+  border: 1px solid rgb(0, 169, 175);
+}
+@keyframes roll {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.song_name {
+  font-weight: 700;
+}
+.song_artist {
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+.controls {
+  display: flex;
+  gap: 2rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.current_time {
+  width: 10rem;
+}
