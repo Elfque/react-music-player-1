@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { genres } from "../constants";
 import Song from "./Song";
 
-const Dashboard = ({ songArray, setCurrent, playing }) => {
+const Dashboard = ({ songArray, setIndex, playing, setPlay, currentSong }) => {
   const genreRef = useRef();
 
   let genreTitle = "Film";
@@ -26,9 +26,11 @@ const Dashboard = ({ songArray, setCurrent, playing }) => {
                 key={song.key}
                 index={index}
                 song={song}
-                setCurrent={setCurrent}
+                setIndex={setIndex}
                 songs={songArray}
                 playing={playing}
+                currentSong={currentSong}
+                setPlay={setPlay}
               />
             ))}
         </div>

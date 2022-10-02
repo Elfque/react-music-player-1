@@ -21,17 +21,18 @@ body {
   color: white;
 }
 .songs {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  justify-items: center;
   gap: 1rem;
+  width: 95%;
+  margin: 1rem auto;
 }
 .cover_pic {
   width: 100%;
 }
 .song {
-  width: 23%;
-  min-width: 15rem;
+  width: 100%;
   padding: 0.5rem;
   background-color: rgb(97, 97, 97);
   color: white;
@@ -52,9 +53,14 @@ body {
 }
 /* OVERLAY */
 .overlay {
-  opacity: 0;
   background-color: #00000050;
   font-size: 3rem;
+}
+.half {
+  opacity: 0.5;
+}
+.zero {
+  opacity: 0;
 }
 .overlay:hover {
   opacity: 0.5;
@@ -70,8 +76,8 @@ body {
   position: fixed;
   bottom: 0;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
   padding: 0 2rem;
   color: white;
@@ -103,6 +109,9 @@ body {
   font-weight: 400;
   font-size: 0.8rem;
 }
+.volume {
+  justify-self: end;
+}
 .controls {
   display: flex;
   gap: 2rem;
@@ -110,5 +119,8 @@ body {
   margin-bottom: 0.5rem;
 }
 .current_time {
-  width: 10rem;
+  width: 15rem;
+}
+.volume_range {
+  width: 12rem;
 }

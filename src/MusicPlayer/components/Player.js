@@ -1,8 +1,14 @@
 import { useRef } from "react";
 import { FaForward, FaBackward, FaPause, FaPlay } from "react-icons/fa";
 
-const Player = ({ playing, playPause, currentSong }) => {
-  const rangeRef = useRef();
+const Player = ({
+  playing,
+  playPause,
+  currentSong,
+  rangeRef,
+  playNext,
+  playPrevious,
+}) => {
   const volumeRef = useRef();
 
   return (
@@ -27,13 +33,13 @@ const Player = ({ playing, playPause, currentSong }) => {
         </div>
         <div className="main_controls d-flex flex-column align-items-center justify-content-center">
           <div className="controls">
-            <FaBackward />
+            <FaBackward onClick={playPrevious} />
             {playing ? (
               <FaPause onClick={playPause} />
             ) : (
               <FaPlay onClick={playPause} />
             )}
-            <FaForward />
+            <FaForward onClick={playNext} />
           </div>
           <div className="range">
             <input
@@ -41,12 +47,19 @@ const Player = ({ playing, playPause, currentSong }) => {
               name=""
               id=""
               ref={rangeRef}
+              value={0}
               className="current_time"
             />
           </div>
         </div>
         <div className="volume">
-          <input type="range" name="" id="" ref={volumeRef} />
+          <input
+            type="range"
+            name=""
+            id=""
+            ref={volumeRef}
+            className="volume_range"
+          />
         </div>
       </div>
     </div>

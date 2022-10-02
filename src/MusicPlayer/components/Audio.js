@@ -1,7 +1,13 @@
 import { useRef, useEffect } from "react";
 
-const Audio = ({ currentSong, playing }) => {
+const Audio = ({ currentSong, playing, setPlay, rangeRef }) => {
   const audio = useRef();
+
+  const timeUpdate = () => {
+    rangeRef.current.value =
+      (audio.current.currentTime / audio.current.duration) * 100;
+    console.log(audio.current.duration);
+  };
 
   useEffect(() => {
     if (playing) {
@@ -11,7 +17,14 @@ const Audio = ({ currentSong, playing }) => {
     }
   }, [playing, currentSong]);
 
-  return <audio src={currentSong?.hub?.actions[1].uri} ref={audio}></audio>;
+  return (
+    <audio
+      src={currentSong?.hub?.actions[1].uri}
+      ref={audio}
+      onTimeUpdate={timeUpdate}
+      onEnded={() => setPlay(false)}
+    ></audio>
+  );
 };
 
 export default Audio;

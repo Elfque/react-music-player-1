@@ -11,8 +11,21 @@ const Music = () => {
   const [fetLink, setFetLink] = useState(
     "https://shazam-core.p.rapidapi.com/v1/charts/world"
   );
-  const [currentSong, setCurrentSong] = useState({});
-  const audio = useRef();
+  const [index, setIndex] = useState(0);
+  let currentSong = songArray[index];
+  const rangeRef = useRef();
+
+  const playNext = () => {
+    setIndex((currentIndex) =>
+      currentIndex == songArray.length - 1 ? 0 : currentIndex + 1
+    );
+  };
+
+  const playPrevious = () => {
+    setIndex((currentIndex) =>
+      currentIndex == 0 ? songArray.length - 1 : currentIndex - 1
+    );
+  };
 
   useEffect(() => {
     const options = {
@@ -41,15 +54,29 @@ const Music = () => {
       <Sidebar />
       <Dashboard
         songArray={songArray}
-        setCurrent={setCurrentSong}
         playing={playing}
-      />
-      <Player
-        playPause={playPause}
-        playing={playing}
+        setIndex={setIndex}
+        setPlay={setPlaying}
         currentSong={currentSong}
       />
-      <Audio currentSong={currentSong} playing={playing} />
+      {currentSong && (
+        <Player
+          playPause={playPause}
+          playing={playing}
+          currentSong={currentSong}
+          rangeRef={rangeRef}
+          playNext={playNext}
+          playPrevious={playPrevious}
+        />
+      )}
+      {currentSong && (
+        <Audio
+          currentSong={currentSong}
+          playing={playing}
+          setPlay={setPlaying}
+          rangeRef={rangeRef}
+        />
+      )}
     </div>
   );
 };
