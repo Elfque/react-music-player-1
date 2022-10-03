@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import PlayPause from "./PlayPause";
 
 const Song = ({
@@ -8,11 +9,14 @@ const Song = ({
   playing,
   currentSong,
   setPlay,
+  setSong,
 }) => {
   const artist = song.artists.map((art) => art.alias);
   const handlePlay = () => {
+    setSong(songs);
     setIndex(index);
     setPlay(true);
+    console.log(currentSong);
   };
 
   const handlePause = () => {
@@ -36,7 +40,9 @@ const Song = ({
         </div>
         <img src={song.images.coverart} alt="" className="cover_pic" />
       </div>
-      <div className="song_title">{song.title}</div>
+      <div className="song_title">
+        <Link to={`song/${song.key}`}>{song.title}</Link>
+      </div>
       <div className="song_artist">{artist.join(" ")}</div>
     </div>
   );

@@ -6,6 +6,8 @@
 }
 body {
   font-family: Manrope;
+  overflow-x: hidden;
+  background-color: #333;
 }
 .music {
   display: grid;
@@ -123,4 +125,51 @@ body {
 }
 .volume_range {
   width: 12rem;
+}
+
+/* SONG DETAILS */
+.songDetails {
+  color: white;
+  padding-left: 2rem;
+  background-size: cover;
+  background-color: rgba(51, 51, 51, 0.521);
+}
+.songDetails h1 {
+  margin: 1rem 0 2rem;
+}
+.open_lyrics {
+  border: none;
+  color: black;
+  background-color: aliceblue;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin: 1rem 0;
+}
+.blur {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  filter: blur(20px);
+}
+
+/* RELATED */
+.related_card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 30rem;
+  margin: 1rem 0;
+  background-color: rgba(51, 51, 51, 0.56);
+  padding: 0.5rem;
+}
+.related_left {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+.relate_play {
+  font-size: 1.5rem;
 }

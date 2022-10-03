@@ -6,7 +6,6 @@ const Audio = ({ currentSong, playing, setPlay, rangeRef }) => {
   const timeUpdate = () => {
     rangeRef.current.value =
       (audio.current.currentTime / audio.current.duration) * 100;
-    console.log(audio.current.duration);
   };
 
   useEffect(() => {
