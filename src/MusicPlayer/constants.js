@@ -1,10 +1,10 @@
 export const genres = [
   { title: "Pop", value: "POP" },
-  { title: "Hip-Hop", value: "HIP-HOP-RAP" },
+  { title: "Hip-Hop", value: "HIP_HOP_RAP" },
   { title: "Dance", value: "DANCE" },
   { title: "Electronic", value: "ELECTRONIC" },
   { title: "Alternative", value: "ALTERNATIVE" },
-  { title: "Native", value: "NATIVE" },
+  { title: "Afro Beat", value: "AFRO_BEATS" },
   { title: "Country", value: "COUNTRY" },
   { title: "Worldwide", value: "WORLDWIDE" },
   { title: "House", value: "HOUSE" },

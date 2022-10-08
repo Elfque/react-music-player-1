@@ -11,12 +11,11 @@ const Song = ({
   setPlay,
   setSong,
 }) => {
-  const artist = song.artists.map((art) => art.alias);
+  const artist = song.artists?.map((art) => art.alias);
   const handlePlay = () => {
     setSong(songs);
     setIndex(index);
     setPlay(true);
-    console.log(currentSong);
   };
 
   const handlePause = () => {
@@ -38,7 +37,11 @@ const Song = ({
             handlePause={handlePause}
           />
         </div>
-        <img src={song.images.coverart} alt="" className="cover_pic" />
+        <img
+          src={song.images.coverart ? song.images.coverart : "./cover_2.jpg"}
+          alt=""
+          className="cover_pic"
+        />
       </div>
       <div className="song_title">
         <Link to={`song/${song.key}`}>{song.title}</Link>

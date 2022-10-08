@@ -1,5 +1,5 @@
-import { useRef } from "react";
 import { FaForward, FaBackward, FaPause, FaPlay } from "react-icons/fa";
+import { BsArrowRepeat, BsShuffle } from "react-icons/bs";
 
 const Player = ({
   playing,
@@ -8,15 +8,21 @@ const Player = ({
   rangeRef,
   playNext,
   playPrevious,
+  current,
+  duration,
+  setAudioVolume,
+  setCurrent,
+  setShuffle,
+  setRepeat,
+  repeat,
+  shuffle,
 }) => {
-  const volumeRef = useRef();
-
   return (
     <div className="player">
       <div className="player_part">
         <div className="song_details">
           <img
-            src={currentSong?.images?.coverart}
+            src={currentSong?.images?.background}
             alt=""
             className="current_song_cover"
           />
@@ -33,6 +39,7 @@ const Player = ({
         </div>
         <div className="main_controls d-flex flex-column align-items-center justify-content-center">
           <div className="controls">
+            <BsShuffle onClick={() => setShuffle(!shuffle)} />
             <FaBackward onClick={playPrevious} />
             {playing ? (
               <FaPause onClick={playPause} />
@@ -40,24 +47,25 @@ const Player = ({
               <FaPlay onClick={playPause} />
             )}
             <FaForward onClick={playNext} />
+            <BsArrowRepeat onClick={() => () => setRepeat(!repeat)} />
           </div>
           <div className="range">
+            <div className="time">{current}</div>
             <input
               type="range"
-              name=""
-              id=""
               ref={rangeRef}
-              value={0}
+              defaultValue={0}
               className="current_time"
+              onChange={(e) => setCurrent(e.target.value)}
             />
+            <div className="time">{duration}</div>
           </div>
         </div>
         <div className="volume">
           <input
             type="range"
-            name=""
-            id=""
-            ref={volumeRef}
+            defaultValue={100}
+            onChange={(e) => setAudioVolume(e.target.value / 100)}
             className="volume_range"
           />
         </div>
