@@ -12,6 +12,7 @@ body {
 .music {
   display: grid;
   grid-template-columns: 12rem 1fr;
+  color: white;
 }
 .dashboard {
   background-color: rgb(48, 48, 48);
@@ -20,7 +21,7 @@ body {
 }
 .songs {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
   justify-items: center;
   gap: 1rem;
   width: 95%;
@@ -54,10 +55,17 @@ a {
   text-decoration: none;
   color: inherit;
 }
+a:hover {
+  color: inherit;
+}
 select {
   background-color: #7c7c7c;
   border: none;
   outline: none;
+  color: whitesmoke;
+}
+nav {
+  display: none;
 }
 
 /* OVERLAY */
@@ -73,6 +81,10 @@ select {
 }
 .overlay:hover {
   opacity: 0.5;
+}
+.card_photo {
+  position: relative;
+  z-index: 0;
 }
 
 /* PLAYER PART */
@@ -95,6 +107,7 @@ select {
   display: flex;
   gap: 2rem;
   align-items: center;
+  grid-row: span 2;
 }
 .song_details img {
   width: 3rem;
@@ -113,34 +126,64 @@ select {
 }
 .song_name {
   font-weight: 700;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
 }
 .song_artist {
   font-weight: 400;
   font-size: 0.8rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
 }
 .volume {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   justify-self: end;
+  font-size: 1.5rem;
+  grid-row: span 2;
 }
 .controls {
   display: flex;
   gap: 2rem;
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
+  align-items: center;
+  justify-content: center;
 }
 .current_time {
-  width: 15rem;
+  width: 100%;
 }
 .volume_range {
-  width: 12rem;
+  width: 80%;
 }
 .range {
-  display: flex;
   gap: 0.5rem;
   align-items: center;
+  display: grid;
+  grid-template-columns: 2.5rem 1fr 2.5rem;
+  width: 100%;
+  text-align: center;
 }
 .time {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
+.spec_control {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.active {
+  background-color: black;
+  border-radius: 50%;
+}
+
 /* SONG DETAILS */
 .songDetails {
   color: white;
@@ -171,6 +214,13 @@ select {
 .songDetails .cover_pic {
   width: 10rem;
 }
+.smalls,
+.lyric_line {
+  font-size: 0.8rem;
+}
+.lyric_line {
+  color: #b4b4b4;
+}
 /* RELATED */
 .related_card {
   display: flex;
@@ -178,15 +228,14 @@ select {
   align-items: center;
   max-width: 30rem;
   margin: 1rem 0;
-  background-color: rgba(51, 51, 51, 0.56);
+  background-color: rgba(141, 141, 141, 0.637);
   padding: 0.5rem;
   border-radius: 10px;
   animation: from-down 1s 1;
   transition: 0.5s;
 }
 .related_card:hover {
-  background-color: rgba(51, 51, 51, 0.76);
-  transform: translateY(-0.25rem);
+  background-color: rgba(141, 141, 141, 0.788);
 }
 .related_left {
   display: flex;
@@ -218,6 +267,9 @@ select {
   top: 0;
   left: 0;
   margin-top: 2rem;
+  transition: 0.5s;
+  background-color: rgb(27, 27, 27);
+  height: 100vh;
 }
 .link {
   padding: 0.5rem;
@@ -235,4 +287,153 @@ select {
 }
 .music_logo img {
   width: 4rem;
+}
+
+/*  ARTIST */
+.artist_image {
+  width: 12rem;
+}
+.artistSong {
+  display: flex;
+  background-color: rgba(110, 110, 110, 0.459);
+  gap: 1rem;
+  border-radius: 0.5rem;
+  max-width: 30rem;
+}
+.art_song {
+  overflow: hidden;
+  width: 80%;
+}
+.artistSong img {
+  width: 4.5rem;
+}
+.light_text {
+  color: #979797;
+  font-size: 0.8rem;
+}
+
+/* TABLET SCREEN */
+@media (max-width: 768px) and (min-width: 450px) {
+  /* MUSIC */
+  .music {
+    display: block;
+  }
+
+  /* NAV */
+  nav {
+    display: block;
+    padding: 0 1.5rem;
+    background-color: transparent;
+    height: 1.5rem;
+  }
+  .nav {
+    position: fixed;
+    top: 0;
+    padding: 0.5rem 1.2rem;
+    left: 0;
+    z-index: 2;
+    background-color: #7c7c7c5b;
+    width: 100%;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed;
+    z-index: 1;
+  }
+  .hide {
+    left: -12rem;
+  }
+
+  /* PLAYER */
+  .player_part {
+    grid-template-columns: 2fr 3fr;
+    padding: 0 1rem;
+    height: 5rem;
+  }
+  .volume {
+    display: none;
+  }
+  .controls {
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  .song_details {
+    gap: 1rem;
+  }
+}
+
+/* MOBILE SCREEN */
+@media (max-width: 449px) {
+  /* MUSIC */
+  .music {
+    display: block;
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
+  /* NAV */
+  nav {
+    display: block;
+    padding: 0 1.5rem;
+    background-color: transparent;
+    height: 2rem;
+  }
+  .nav {
+    position: fixed;
+    top: 0;
+    padding: 0.5rem 1.2rem;
+    left: 0;
+    z-index: 2;
+    background-color: #7c7c7c5b;
+    width: 100%;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed;
+    z-index: 1;
+  }
+  .hide {
+    left: -12rem;
+  }
+
+  /* PLAYER */
+  .player_part {
+    grid-template-columns: 2fr 3fr;
+    padding: 0 1rem;
+    height: 5rem;
+  }
+  .volume {
+    display: none;
+  }
+  .controls {
+    font-size: 0.9rem;
+    gap: 1rem;
+  }
+  .song_details {
+    gap: 1rem;
+    grid-row: span 1;
+    overflow: hidden;
+  }
+  .song_details img {
+    display: none;
+  }
+  .range {
+    grid-column: span 2;
+  }
+  .spec_control {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .songs {
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  }
+  .song_title {
+    font-size: 0.8rem;
+  }
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
 import Song from "./Song";
+
 const TopSongs = ({ setIndex, playing, setPlay, currentSong, setSong }) => {
   const [topSongs, setTopSongs] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -24,7 +25,7 @@ const TopSongs = ({ setIndex, playing, setPlay, currentSong, setSong }) => {
   }, []);
 
   return (
-    <div className="top_songs">
+    <div className="top_songs px-3 py-2">
       <h2>Discover Top Songs in the world</h2>
       <div className="text-center">{loading && <Loader />}</div>
       {!loading && (

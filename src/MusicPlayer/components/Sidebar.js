@@ -1,24 +1,24 @@
 import { FaGlobe, FaGlobeAfrica, FaSlidersH } from "react-icons/fa";
 import { Link } from "react-router-dom";
-const Sidebar = () => {
+const Sidebar = ({ showSide, setShowSide }) => {
   return (
     <div className="sidebar">
-      <div className="side">
+      <div className={`side ${showSide ? "" : "hide"}`}>
         <div className="music_logo">
           <img src="./logo.png" alt="" />
         </div>
         <div className="Links">
-          <div className="link">
+          <div className="link" onClick={() => setShowSide(false)}>
             <FaSlidersH />
-            <Link to={"/"}>Genres</Link>
+            <Link to={"/"}>Discover</Link>
           </div>
-          <div className="link">
+          <div className="link" onClick={() => setShowSide(false)}>
             <FaGlobe />
-            <Link to={"/top"}>World Top Songs</Link>
+            <Link to={"/top"}>Top Chart</Link>
           </div>
-          <div className="link">
+          <div className="link" onClick={() => setShowSide(false)}>
             <FaGlobeAfrica />
-            <Link to={"/world"}>Top Song in your Country</Link>
+            <Link to={"/world"}>Around You</Link>
           </div>
         </div>
       </div>

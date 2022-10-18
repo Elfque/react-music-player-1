@@ -36,13 +36,12 @@ const Dashboard = ({ setIndex, playing, setPlay, currentSong, setSong }) => {
     setFetchLink(
       `https://shazam-core.p.rapidapi.com/v1/charts/genre-world?genre_code=${genreRef.current.value}`
     );
-    console.log(fetchLink);
   };
 
   return (
     <div className="dashboard">
       <div className="d-flex flex-column">
-        <div className="d-flex justify-content-between align-items-center  my-3 px-4">
+        <div className="d-block d-sm-flex justify-content-between align-items-center  my-3 px-4">
           <h1>Discover {genreTitle}</h1>
           <select name="" id="" ref={genreRef} onChange={changeGenre}>
             {genres.map((gen) => (
@@ -53,24 +52,24 @@ const Dashboard = ({ setIndex, playing, setPlay, currentSong, setSong }) => {
           </select>
         </div>
         <div className="text-center">{loading && <Loader />}</div>
-        {/* {!loading && ( */}
-        <div className="songs mt-3">
-          {genreArray &&
-            genreArray.map((song, index) => (
-              <Song
-                key={song.key}
-                index={index}
-                song={song}
-                setIndex={setIndex}
-                songs={genreArray}
-                playing={playing}
-                currentSong={currentSong}
-                setPlay={setPlay}
-                setSong={setSong}
-              />
-            ))}
-        </div>
-        {/* // )} */}
+        {!loading && (
+          <div className="songs mt-3">
+            {genreArray &&
+              genreArray.map((song, index) => (
+                <Song
+                  key={song.key}
+                  index={index}
+                  song={song}
+                  setIndex={setIndex}
+                  songs={genreArray}
+                  playing={playing}
+                  currentSong={currentSong}
+                  setPlay={setPlay}
+                  setSong={setSong}
+                />
+              ))}
+          </div>
+        )}
       </div>
     </div>
   );

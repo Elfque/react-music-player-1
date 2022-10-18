@@ -30,8 +30,8 @@ const WorldTop = ({ setIndex, playing, setPlay, currentSong, setSong }) => {
   const newCountryTop = countryTop && countryTop.filter((arr) => arr.images);
 
   return (
-    <div className="world">
-      <div>This are the top songs in your country</div>
+    <div className="world px-3 py-2">
+      <h2>These are the top songs in your country</h2>
       <div className="text-center">{loading && <Loader />}</div>
       <div className="songs">
         {newCountryTop &&

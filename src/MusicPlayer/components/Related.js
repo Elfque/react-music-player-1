@@ -1,5 +1,5 @@
 import PlayPause from "./PlayPause";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Related = ({
   track,
@@ -10,7 +10,6 @@ const Related = ({
   setSong,
   index,
   tracks,
-  setNewFetch,
 }) => {
   const handlePlay = () => {
     setSong(tracks);
@@ -27,15 +26,15 @@ const Related = ({
       <div className="related_left">
         <img src={track.images?.coverart} alt="" width={"100px"} />
         <div>
-          <div className="fetch" onClick={() => setNewFetch(track.key)}>
-            {track.title}
-          </div>
+          {/* <div className="fetch" onClick={() => setNewFetch(track.key)}> */}
+          <Link to={`/song/${track.key}`}>{track.title}</Link>
+          {/* </div> */}
           <div className="artist">
             {track.artists.map((art) => art.alias).join(" , ")}
           </div>
         </div>
       </div>
-      <div className="relate_right">
+      <div className="relate_right fs-2">
         <PlayPause
           isEqual={current === track ? true : false}
           playing={playing}

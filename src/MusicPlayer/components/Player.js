@@ -1,4 +1,10 @@
-import { FaForward, FaBackward, FaPause, FaPlay } from "react-icons/fa";
+import {
+  FaForward,
+  FaBackward,
+  FaPause,
+  FaPlay,
+  FaVolumeUp,
+} from "react-icons/fa";
 import { BsArrowRepeat, BsShuffle } from "react-icons/bs";
 
 const Player = ({
@@ -16,7 +22,15 @@ const Player = ({
   setRepeat,
   repeat,
   shuffle,
+  decideTime,
 }) => {
+  const playRepeat = () => {
+    setRepeat(!repeat);
+  };
+  const setPlayTime = () => {
+    setCurrent(rangeRef.current.value);
+    decideTime();
+  };
   return (
     <div className="player">
       <div className="player_part">
@@ -37,9 +51,11 @@ const Player = ({
             </div>
           </div>
         </div>
-        <div className="main_controls d-flex flex-column align-items-center justify-content-center">
+        <div className="main_controls">
           <div className="controls">
-            <BsShuffle onClick={() => setShuffle(!shuffle)} />
+            <div className={`spec_control ${shuffle ? "active" : ""}`}>
+              <BsShuffle onClick={() => setShuffle(!shuffle)} />
+            </div>
             <FaBackward onClick={playPrevious} />
             {playing ? (
               <FaPause onClick={playPause} />
@@ -47,27 +63,30 @@ const Player = ({
               <FaPlay onClick={playPause} />
             )}
             <FaForward onClick={playNext} />
-            <BsArrowRepeat onClick={() => () => setRepeat(!repeat)} />
-          </div>
-          <div className="range">
-            <div className="time">{current}</div>
-            <input
-              type="range"
-              ref={rangeRef}
-              defaultValue={0}
-              className="current_time"
-              onChange={(e) => setCurrent(e.target.value)}
-            />
-            <div className="time">{duration}</div>
+            <div className={`spec_control ${repeat ? "active" : ""}`}>
+              <BsArrowRepeat onClick={playRepeat} />
+            </div>
           </div>
         </div>
         <div className="volume">
+          <FaVolumeUp />
           <input
             type="range"
             defaultValue={100}
             onChange={(e) => setAudioVolume(e.target.value / 100)}
             className="volume_range"
           />
+        </div>
+        <div className="range">
+          <div className="time">{current}</div>
+          <input
+            type="range"
+            ref={rangeRef}
+            defaultValue={0}
+            className="current_time"
+            onChange={setPlayTime}
+          />
+          <div className="time">{duration}</div>
         </div>
       </div>
     </div>

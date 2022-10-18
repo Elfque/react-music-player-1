@@ -11,7 +11,6 @@ const Song = ({
   setPlay,
   setSong,
 }) => {
-  const artist = song.artists?.map((art) => art.alias);
   const handlePlay = () => {
     setSong(songs);
     setIndex(index);
@@ -22,9 +21,15 @@ const Song = ({
     setPlay(false);
   };
 
+  const formatText = (text) => {
+    const area = document.createElement("textarea");
+    area.value = text;
+    return area.value;
+  };
+
   return (
     <div className="song">
-      <div className="position-relative">
+      <div className="card_photo">
         <div
           className={`position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center overlay ${
             currentSong === song ? "half" : "zero"
@@ -37,16 +42,20 @@ const Song = ({
             handlePause={handlePause}
           />
         </div>
-        <img
-          src={song.images.coverart ? song.images.coverart : "./cover_2.jpg"}
-          alt=""
-          className="cover_pic"
-        />
+        <img src={song.images?.coverart} alt="" className="cover_pic" />
       </div>
       <div className="song_title">
-        <Link to={`song/${song.key}`}>{song.title}</Link>
+        <Link to={`/song/${song.key}`}>{song.title}</Link>
       </div>
-      <div className="song_artist">{artist.join(" ")}</div>
+      <div className="song_artist">
+        {/* {artist?.join(" ")} */}
+        {song.artists?.map((artist, i) => (
+          <Link to={`/artist/${artist.adamid}`} key={artist.adamid}>
+            {formatText(artist.alias)}
+            {i !== song.artists.length - 1 ? " & " : ""}
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };

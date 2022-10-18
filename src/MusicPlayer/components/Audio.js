@@ -1,17 +1,16 @@
-import { useRef, useEffect } from "react";
+import { useEffect } from "react";
 
 const Audio = ({
   currentSong,
   playing,
-  current,
   rangeRef,
   playNext,
   setDurationTime,
   setCurrentTime,
   audioVolume,
+  repeat,
+  audio,
 }) => {
-  const audio = useRef();
-
   const timeUpdate = () => {
     rangeRef.current.value =
       (audio.current.currentTime / audio.current.duration) * 100;
@@ -36,27 +35,30 @@ const Audio = ({
     if (playing) {
       audio.current.play();
     } else {
-      currentSong.hub && audio.current.pause();
+      audio.current.pause();
     }
-  }, [playing, currentSong]);
+  }, [playing, currentSong, audio]);
 
   useEffect(() => {
     audio.current.volume = audioVolume;
-  }, [audioVolume]);
+  }, [audioVolume, audio]);
 
-  // useEffect(() => {
-  //   if (audio) {
-  //     audio.current.currentTime = (current * audio.current.duration) / 100;
-  //   }
-  // }, [current]);
+  const decidePlay = () => {
+    if (repeat) {
+      audio.current.play();
+    } else {
+      playNext();
+    }
+  };
 
   return (
     <audio
       src={currentSong?.hub?.actions[1].uri}
       ref={audio}
       onTimeUpdate={timeUpdate}
-      onEnded={playNext}
+      onEnded={decidePlay}
     ></audio>
+    // <audio src="./Wake.mp3" ref={audio} onTimeUpdate={timeUpdate}></audio>
   );
 };
 

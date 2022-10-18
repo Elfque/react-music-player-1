@@ -4,16 +4,9 @@ import Loader from "./Loader";
 import Related from "./Related";
 
 const SongDetails = ({ current, setIndex, playing, setPlay, setSong }) => {
-  const song_id = useParams();
+  const { song_id } = useParams();
   const [songObj, setSongObj] = useState();
-  const [songFetchLink, setSongFetchLink] = useState(
-    `https://shazam-core.p.rapidapi.com/v1/tracks/details?track_id=${song_id.song_id}`
-  );
-  const [trackRelatedLink, setTrackRelatedLink] = useState(
-    `https://shazam-core.p.rapidapi.com/v1/tracks/related?track_id=${song_id.song_id}`
-  );
   const [loading, setLoading] = useState(false);
-  const [showLyrics, setShowLyrics] = useState(false);
   const [tracksRelated, setTrackRelated] = useState(null);
 
   useEffect(() => {
@@ -25,14 +18,17 @@ const SongDetails = ({ current, setIndex, playing, setPlay, setSong }) => {
         "X-RapidAPI-Host": "shazam-core.p.rapidapi.com",
       },
     };
-    fetch(songFetchLink, options)
+    fetch(
+      `https://shazam-core.p.rapidapi.com/v1/tracks/details?track_id=${song_id}`,
+      options
+    )
       .then((response) => response.json())
       .then((response) => {
         setSongObj(response);
         setLoading(false);
       })
       .catch((err) => console.error(err));
-  }, [songFetchLink]);
+  }, [song_id]);
 
   useEffect(() => {
     const options = {
@@ -43,73 +39,65 @@ const SongDetails = ({ current, setIndex, playing, setPlay, setSong }) => {
       },
     };
 
-    fetch(trackRelatedLink, options)
+    fetch(
+      `https://shazam-core.p.rapidapi.com/v1/tracks/related?track_id=${song_id}`,
+      options
+    )
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
         setTrackRelated(response);
       })
       .catch((err) => console.error(err));
-  }, [trackRelatedLink]);
-
-  const setNewFetch = (songId) => {
-    setSongFetchLink(
-      `https://shazam-core.p.rapidapi.com/v1/tracks/details?track_id=${songId}`
-    );
-    setTrackRelatedLink(
-      `https://shazam-core.p.rapidapi.com/v1/tracks/related?track_id=${songId}`
-    );
-  };
+  }, [song_id]);
 
   const newRelated =
     tracksRelated && tracksRelated.filter((track) => track.images);
+  console.log(tracksRelated);
+
+  const formatText = (text) => {
+    const area = document.createElement("textarea");
+    area.value = text;
+    return area.value;
+  };
 
   return (
     <div className="songDetails">
-      <h1>Song Details</h1>
       <div className="text-center">{loading && <Loader />}</div>
-      <div
-        className="blur"
-        style={{
-          background: songObj && `url(${songObj.images.background}`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-        }}
-      ></div>
       {songObj && (
-        <div>
-          <img src={songObj.images.coverart} alt="" className="cover_pic" />
-
-          <div className="gen">Title : {songObj.title}</div>
-          <div className="gen">Artist : {songObj.artists[0]?.alias}</div>
-          <div className="gen">Genre : {songObj.genres?.primary}</div>
-          <button
-            className="open_lyrics"
-            onClick={() => setShowLyrics(!showLyrics)}
-          >
-            {showLyrics ? "Close Lyrics" : "Open Lyrics"}
-          </button>
-          {showLyrics && (
-            <div className="lyrics_part">
-              {songObj.sections[1].type === "LYRICS" ? (
-                songObj.sections[1].text.map((line, i) => (
-                  <div key={i} className="lyric_line">
-                    {line}
-                  </div>
-                ))
-              ) : (
-                <div>Lyrics not found</div>
-              )}
-              <button
-                className="open_lyrics"
-                onClick={() => setShowLyrics(false)}
-              >
-                Close Lyrics
-              </button>
+        <div className="mt-4">
+          <div className="d-flex gap-3 align-items-center">
+            <img
+              src={songObj.images.coverart}
+              alt=""
+              className="cover_pic rounded-circle"
+            />
+            <div>
+              <div className="gen fw-bold">{songObj.title}</div>
+              <div className="gen fw-light smalls">
+                {formatText(songObj.artists[0]?.alias)}
+              </div>
+              <div className="gen fw-light smalls">
+                {songObj.genres?.primary}
+              </div>
             </div>
-          )}
+          </div>
+
+          <div className="fw-bold mt-3">Lyrics:</div>
+          <div className="lyrics_part">
+            {songObj.sections[1].type === "LYRICS" ? (
+              songObj.sections[1].text.map((line, i) => (
+                <div key={i} className="lyric_line">
+                  {line}
+                </div>
+              ))
+            ) : (
+              <div>Lyrics not found</div>
+            )}
+          </div>
         </div>
       )}
+      <div className="fw-bold mt-3">Related:</div>
       <div className="related">
         {newRelated &&
           newRelated.map((track, idx) => (
@@ -123,7 +111,6 @@ const SongDetails = ({ current, setIndex, playing, setPlay, setSong }) => {
               setSong={setSong}
               index={idx}
               tracks={newRelated}
-              setNewFetch={setNewFetch}
             />
           ))}
       </div>

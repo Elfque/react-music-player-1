@@ -5,11 +5,11 @@ import Player from "./components/Player";
 import Sidebar from "./components/Sidebar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./style.css";
-// import Artist from "./components/Artist";
+import Artist from "./components/Artist";
 import SongDetails from "./components/SongDetails";
 import TopSongs from "./components/TopSong";
 import WorldTop from "./components/WorldTop";
-import { useEffect } from "react";
+import { FaList } from "react-icons/fa";
 
 const Music = () => {
   const [playing, setPlaying] = useState(false);
@@ -18,49 +18,61 @@ const Music = () => {
   const [currentTime, setCurrentTime] = useState("00 : 00");
   const [durationTime, setDurationTime] = useState("00 : 00");
   const [audioVolume, setAudioVolume] = useState(1);
-  const [current, setCurrent] = useState(1);
+  const [current, setCurrent] = useState(0);
   const [repeat, setRepeat] = useState(false);
   const [shuffle, setShuffle] = useState(false);
+  const [showSide, setShowSide] = useState(false);
 
+  // let currentSong = "Wake.mp3";
   let currentSong = songArray[index];
   const rangeRef = useRef();
-  const volumeRef = useRef();
-
+  const audio = useRef();
   const playNext = () => {
-    setIndex((currentIndex) =>
-      currentIndex === songArray.length - 1 ? 0 : currentIndex + 1
-    );
+    if (shuffle) {
+      setIndex(
+        (currentIndex) =>
+          (currentIndex = Math.trunc(Math.random() * songArray.length + 1))
+      );
+    } else {
+      setIndex((currentIndex) =>
+        currentIndex === songArray.length - 1 ? 0 : currentIndex + 1
+      );
+    }
   };
 
   const playPrevious = () => {
-    setIndex((currentIndex) =>
-      currentIndex === 0 ? songArray.length - 1 : currentIndex - 1
-    );
+    if (shuffle) {
+      setIndex(
+        (currentIndex) =>
+          (currentIndex = Math.trunc(Math.random() * songArray.length + 1))
+      );
+    } else {
+      setIndex((currentIndex) =>
+        currentIndex === 0 ? songArray.length - 1 : currentIndex - 1
+      );
+    }
   };
 
   const playPause = () => {
     setPlaying(!playing);
-    console.log(currentSong.hub.actions[1].uri);
   };
 
-  const volumeChange = () => {
-    return volumeRef.current.value / 100;
+  const decideTime = () => {
+    audio.current.currentTime = (current * audio.current.duration) / 100;
   };
-
-  useEffect(() => {
-    window.addEventListener("keydown", (e) => {
-      if (e.key === " ") {
-        if (currentSong) {
-          playPause();
-        }
-      }
-    });
-  });
 
   return (
     <Router>
       <div className="music">
-        <Sidebar />
+        <nav>
+          <div className="nav">
+            <FaList
+              className="nav_icon"
+              onClick={() => setShowSide(!showSide)}
+            />
+          </div>
+        </nav>
+        <Sidebar showSide={showSide} setShowSide={setShowSide} />
         <Routes>
           <Route
             path="/"
@@ -113,6 +125,18 @@ const Music = () => {
               />
             }
           />
+          <Route
+            path="/artist/:artist_id"
+            element={
+              <Artist
+                currentSong={currentSong}
+                playing={playing}
+                setIndex={setIndex}
+                setPlay={setPlaying}
+                setSong={setSongArray}
+              />
+            }
+          />
         </Routes>
 
         {currentSong && (
@@ -131,21 +155,21 @@ const Music = () => {
             setShuffle={setShuffle}
             repeat={repeat}
             shuffle={shuffle}
+            decideTime={decideTime}
+            audioVolume={audioVolume}
           />
         )}
         {currentSong && (
           <Audio
             currentSong={currentSong}
-            volumeChange={volumeChange}
             playing={playing}
-            setPlay={setPlaying}
             rangeRef={rangeRef}
             playNext={playNext}
             setDurationTime={setDurationTime}
             setCurrentTime={setCurrentTime}
-            volumeRef={volumeRef}
             audioVolume={audioVolume}
-            current={current}
+            repeat={repeat}
+            audio={audio}
           />
         )}
       </div>
